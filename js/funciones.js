@@ -1,5 +1,5 @@
 //const url = 'https://api-2670689.onrender.com/usuario'
-const url = 'https://backendventas.onrender.com'
+const url = 'https://backendventas.onrender.com/venta'
 
 const listarVentas = async() => {
     //Objeto del html donde se deslegará la información
