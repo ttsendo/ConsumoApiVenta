@@ -195,7 +195,7 @@ function generateUUID() { // Public Domain/MIT
 function deleteVenta(id){
     console.log(id);
 
-    fetch('https://backendventas.onrender.com/venta?id='+id, {
+    fetch('http://localhost:3535/venta?id='+id, {
         method: 'DELETE',
         mode: 'cors',
         // body: JSON.stringify(id),//Convertir el objeto a JSON
