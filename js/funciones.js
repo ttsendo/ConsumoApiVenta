@@ -1,5 +1,6 @@
 //const url = 'https://api-2670689.onrender.com/usuario'
-const url = 'http://localhost:3535/venta'
+const url = 'https://backendventas.onrender.com/venta'
+
 
 const listarVentas = async() => {
     //Objeto del html donde se deslegará la información
@@ -27,7 +28,7 @@ const listarVentas = async() => {
             `<td>`+venta.nombre+`</td>`+
             `<td>`+venta.apellido+`</td>`+
             `<td>`+venta.producto+`</td>`+
-            `<td>`+venta.precio+`</td>`+
+            `<td>`+venta.precio_dolar+`</td>`+
             `<td><button onclick="redireccionarEditar('${objetoVenta}')">Editar</button></td>`+
             `<td><button onclick="deleteVenta('${venta.id}')">Eliminar</button></td>`+
             `</tr>`
@@ -51,7 +52,7 @@ const registrarVenta = () => {
     const nombre = document.getElementById('nombre').value;
     const apellido = document.getElementById('apellido').value
     const producto = document.getElementById('producto').value
-    const precio = document.getElementById('precio').value
+    const precio_dolar = document.getElementById('precio_dolar').value
     
 
     // if(registro_envio.length == 0){
@@ -72,19 +73,11 @@ const registrarVenta = () => {
         document.getElementById('productoHelp').innerHTML = 'Dato requerido'
         alert(3)
     } 
-    if(precio.length == 0){
+    if(precio_dolar.length == 0){
         document.getElementById('precioHelp').innerHTML = 'Dato requerido'
         alert(4)
     } 
-                            // else if(rol == ""){
-    //     document.getElementById('rolHelp').innerHTML = 'Dato requerido'
-    // }
-    // else if(estado == ""){
-    //     document.getElementById('estadoHelp').innerHTML = 'Dato requerido'
-    // }
-    // else if(password != confirmarPassword){
-    //     alert('Las contraseñas no coinciden')
-    // }
+
 
     alert('Registrando')
         let venta = {
@@ -92,7 +85,7 @@ const registrarVenta = () => {
             nombre: nombre,
             apellido:apellido,
             producto:producto,
-            precio:precio,
+            precio_dolar:precio_dolar,
         }
         
         //Fecth permite reaizar peticiones http a una url
@@ -117,10 +110,8 @@ const actualizarVenta = () => {
     const nombre = document.getElementById('nombre').value;
     const apellido = document.getElementById('apellido').value
     const producto = document.getElementById('producto').value
-    const precio = document.getElementById('precio').value
+    const precio_dolar = document.getElementById('precio_dolar').value
 
-    // if(registro_envio.length == 0){
-    //     document.getElementById('registro_envioHelp').innerHTML = 'Dato requerido'
 
     // }
     if(nombre.length == 0){
@@ -132,25 +123,17 @@ const actualizarVenta = () => {
     else if(producto.length == 0){
         document.getElementById('productoHelp').innerHTML = 'Dato requerido'
     } 
-    else if(precio.length == 0){
-        document.getElementById('precioHelp').innerHTML = 'Dato requerido'
+    else if(precio_dolar.length == 0){
+        document.getElementById('precio_dolarHelp').innerHTML = 'Dato requerido'
     }                                                          
-    // else if(rol == ""){
-    //     document.getElementById('rolHelp').innerHTML = 'Dato requerido'
-    // }
-    // else if(estado == ""){
-    //     document.getElementById('estadoHelp').innerHTML = 'Dato requerido'
-    // }
-    //  else if(password != confirmarPassword){
-    //     alert('Las contraseñas no coinciden')
-    // }
+
     else{
         let venta = {
             _id: _id,
             nombre: nombre,
             apellido:apellido,
             producto:producto,
-            precio:precio,
+            precio_dolar:precio_dolar,
         }
         
         //Fecth permite reaizar peticiones http a una url
@@ -180,7 +163,7 @@ const editarVenta = () => {
     document.getElementById('nombre').value = urlParams.get('nombre')
     document.getElementById('apellido').value = urlParams.get('apellido')
     document.getElementById('producto').value = urlParams.get('producto')
-    document.getElementById('precio').value = urlParams.get('precio')
+    document.getElementById('precio_dolar').value = urlParams.get('precio_dolar')
 }
 
 if(document.querySelector('#btnRegistrar')){ //Si objeto exitste
@@ -212,7 +195,7 @@ function generateUUID() { // Public Domain/MIT
 function deleteVenta(id){
     console.log(id);
 
-    fetch('http://localhost:3535/venta?id='+id, {
+    fetch('https://backendventas.onrender.com/venta?id='+id, {
         method: 'DELETE',
         mode: 'cors',
         // body: JSON.stringify(id),//Convertir el objeto a JSON
@@ -226,3 +209,59 @@ function deleteVenta(id){
     
 
 }
+
+const obtenerDatoEspecifico = async () => {
+    const apiUrl = 'https://www.datos.gov.co/resource/mcec-87by.json';
+    
+    try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    
+    // Supongamos que quieres obtener el primer dato de la respuesta
+    const valor = data[0];
+    
+    // Ahora puedes usar datoEspecifico como necesites
+    console.log('Dato específico:', valor);
+    
+    // Si necesitas realizar alguna acción con este dato, puedes hacerlo aquí
+    } catch (error) {
+    console.error('Error al obtener dato específico de la API:', error);
+    }
+    };
+    
+    // Llama a la función para obtener el dato específico
+    obtenerDatoEspecifico();
+    
+    // ...
+    
+    // Función para obtener y cargar los datos de la API en el campo precioDolar
+    const cargarDatosDeAPI = async () => {
+    const apiUrl = 'https://www.datos.gov.co/resource/mcec-87by.json';
+    
+    try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    
+    // Supongamos que precioDolar es el campo que quieres cargar
+    const precio_dolar = document.getElementById('precio_dolar');
+    
+    // Aquí decides cómo quieres seleccionar el valor de la API, por ejemplo, usando el primer elemento
+    const primerElementoDeLaApi = data[0];
+    const valor = primerElementoDeLaApi && primerElementoDeLaApi.valor;
+    
+    // Verificamos si el valor de la API es válido antes de asignarlo al campo
+    if (valor !== undefined) {
+    precio_dolar.value = valor;
+    }
+    
+    } catch (error) {
+    console.error('Error al cargar datos de la API:', error);
+    }
+    };
+    
+    // Llamamos a la función para cargar los datos cuando la página se carga
+   
+    
+    // ...
+  
+  

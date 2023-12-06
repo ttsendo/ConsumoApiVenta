@@ -9,7 +9,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 </head>
 
-<body>
+<body onload="cargarDatosdeApi()">
     <div class="container">
         <form>
             <div class="form-group">
@@ -37,11 +37,11 @@
 
             <div class="form-group">
                 <label for="precio">Precio</label>
-                <input type="text" class="form-control" id="precio" aria-describedby="precio"
-                    placeholder="Ingrese Precio" />
-                <small id="precioHelp" class="form-text text-muted"><br /></small>
+                <input type="text" class="form-control" id="precio_dolar" aria-describedby="precio"
+                    placeholder="" >
+                <small id="precio_dolarHelp" class="form-text text-muted"><br /></small>
             </div>
-        
+            
             <button type="button" class="btn btn-primary" id="btnRegistrar">
                 Registrar
             </button>
@@ -54,5 +54,10 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <script src="js/funciones.js"></script>
+    <script>
+         window.onload = () => {
+    cargarDatosDeAPI();
+    };
+    </script>
 </body>
 </html>
